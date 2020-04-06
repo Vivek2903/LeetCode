@@ -1,0 +1,83 @@
+/**
+* Given an array of strings, group anagrams together.
+* Example:
+* Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
+* Output:
+* [
+*   ["ate","eat","tea"],
+*   ["nat","tan"],
+*   ["bat"]
+* ]
+* Note:
+* All inputs will be in lowercase.
+* The order of your output does not matter.
+*/
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> anaGroups = new HashMap<>();
+        for(int i=0; i<strs.length; i++) {
+            char[] chars = strs[i].toCharArray();
+            Arrays.sort(chars);
+            String s = new String(chars);
+            if(anaGroups.containsKey(s)) {
+                anaGroups.get(s).add(strs[i]);
+            } else {
+                List<String> lst = new ArrayList<>();
+                lst.add(strs[i]);
+                anaGroups.put(s, lst);
+            }
+        }
+        
+        return new ArrayList<List<String>>(anaGroups.values());
+    }
+}
+
+    /* Failed last test case due to time constrain
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if(strs == null) {
+            return null;
+        }
+        
+        List<List<String>> anagramGroups = new ArrayList<>();
+
+        for(int i=0; i<strs.length; i++) {
+            
+            boolean isAdded = false;
+            for(List<String> grp : anagramGroups) {
+                if(isAnagram(grp.get(0), strs[i])) {
+                    grp.add(strs[i]);
+                    isAdded = true;
+                    break;
+                }
+            }
+            
+            if(!isAdded) {
+                List<String> newGrp = new ArrayList<>();
+                newGrp.add(strs[i]);
+                anagramGroups.add(newGrp);
+            }
+        }
+        
+        return anagramGroups;
+    }
+    
+    public static boolean isAnagram(String str1, String str2) {
+        if(str1.length() != str2.length()) {
+            return false;
+        }
+        int[] chars = new int[256];
+        for(int i=0; i<str1.length(); i++) {
+            chars[str1.charAt(i)]++;
+            chars[str2.charAt(i)]--;
+        }
+        
+        for(int i=0; i<chars.length; i++) {
+            if(chars[i] != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    */
