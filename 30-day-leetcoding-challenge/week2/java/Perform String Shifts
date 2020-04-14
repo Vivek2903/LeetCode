@@ -1,0 +1,30 @@
+/**
+* You are given a string s containing lowercase English letters, and a matrix shift, where shift[i] = [direction, amount]:
+* 1. direction can be 0 (for left shift) or 1 (for right shift). 
+* 2. amount is the amount by which string s is to be shifted.
+* 3. A left shift by 1 means remove the first character of s and append it to the end.
+* Similarly, a right shift by 1 means remove the last character of s and add it to the beginning.
+* Return the final string after all operations.
+*/
+class Solution {
+    public String stringShift(String s, int[][] shifts) {
+        int start = 0;
+        int len = s.length();
+
+        for(int[] shift : shifts) {
+            if(shift[0] == 0) {
+                start = (start + shift[1]) % len;
+            } else {
+                start = (len + start - shift[1]) % len;
+            }
+        }
+        
+        StringBuffer bfr = new StringBuffer();
+        for(int i = 0; i < s.length(); i++){
+            bfr.append(s.charAt(start));
+            start = (start + 1) % len;
+        }
+        
+        return bfr.toString();
+    }
+}
