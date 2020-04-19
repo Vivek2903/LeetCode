@@ -40,3 +40,34 @@ class Solution {
             : searchHelper(nums, low, mid - 1, target);
     }
 }
+// Iterative logic
+class Solution {
+    public int search(int[] nums, int target) {
+        return searchHelper(nums, 0, nums.length-1, target);
+    }
+    
+    private int searchHelper(int[] nums, int low, int high, int target) {
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            if(nums[mid] == target) {
+                return mid;
+            }
+
+            if(nums[low] <= nums[mid]) {
+                if(target >= nums[low] && target < nums[mid]) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            } else {
+                if(target > nums[mid] && target <= nums[high]) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+        }
+        return -1;
+        
+    }
+}
