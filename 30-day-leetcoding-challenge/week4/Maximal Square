@@ -1,0 +1,33 @@
+/**
+* Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+* Example:
+* Input: 
+* 1 0 1 0 0
+* 1 0 1 1 1
+* 1 1 1 1 1
+* 1 0 0 1 0
+* Output: 4
+*/
+class Solution {
+    public int maximalSquare(char[][] m) {
+        if(m == null || m.length == 0) {
+            return 0;
+        }
+
+        int maxSqr = 0;
+        int[][] mem = new int[m.length][m[0].length];
+        
+        for(int i=0; i<m.length; i++) {
+            for(int j=0; j<m[i].length; j++) {
+                mem[i][j] = m[i][j] - 48;
+                if(i > 0 && j > 0 && mem[i][j] == 1) {
+                    mem[i][j] = Math.min(Math.min(mem[i-1][j-1], mem[i][j-1]), mem[i-1][j]) 
+                                + 1;
+                }
+                maxSqr = Math.max(maxSqr, mem[i][j]);
+            }
+        }
+        
+        return maxSqr * maxSqr;
+    }
+}
