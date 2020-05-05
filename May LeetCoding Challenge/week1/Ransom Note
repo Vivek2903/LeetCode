@@ -1,0 +1,43 @@
+/**
+* Given an arbitrary ransom note string and another string containing letters from all the magazines,
+* write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
+* Each letter in the magazine string can only be used once in your ransom note.
+*
+* Note: You may assume that both strings contain only lowercase letters.
+*
+* Examples:
+* canConstruct("a", "b") -> false
+* canConstruct("aa", "ab") -> false
+* canConstruct("aa", "aab") -> true
+* 
+* Additionals: Improve your algorithm for uppercase characters. 
+*/
+class Solution {
+    public boolean canConstruct(String note, String mag) {
+        if(note == null || note.isEmpty()) {
+            return true;
+        }
+        
+        if(mag == null || mag.isEmpty()) {
+            return false;
+        }
+        
+        Map<Character, Integer> charFreq = new HashMap<>();
+        
+        for(int i=0, len=mag.length(); i<len; i++) {
+            char c = mag.charAt(i);
+            charFreq.put(c, charFreq.getOrDefault(c, 0) + 1);
+        }
+        
+        for(int i=0, len=note.length(); i<len; i++) {
+            char c = note.charAt(i);
+            int freq = charFreq.getOrDefault(c, 0);
+            if(freq == 0) {
+                return false;
+            }
+            charFreq.put(c, freq - 1);
+        }
+        
+        return true;
+    }
+}
