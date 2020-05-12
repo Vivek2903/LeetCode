@@ -44,7 +44,7 @@ class Solution {
 
         while (lo < hi){
             int mid = lo + ((hi - lo) >> 1);
-            // for faster execution mid << 1 can be used
+            // for faster execution (mid << 1) can be used
             if (nums[2 * mid] == nums[2 * mid + 1]){
                 lo = mid + 1;
             } else {
