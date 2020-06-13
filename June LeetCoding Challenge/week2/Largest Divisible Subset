@@ -1,0 +1,41 @@
+/**
+* Given a set of distinct positive integers, find the largest subset such that 
+* every pair (Si, Sj) of elements in this subset satisfies:
+* Si % Sj = 0 or Sj % Si = 0.
+* If there are multiple solutions, return any subset is fine.
+*
+* Example 1:
+* Input: [1,2,3]
+* Output: [1,2] (of course, [1,3] will also be ok)
+*
+* Example 2:
+* Input: [1,2,4,8]
+* Output: [1,2,4,8]
+*/
+class Solution {
+    int[] subset;
+    List<Integer> largest;
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        Arrays.sort(nums);
+        subset = new int[nums.length];
+        Arrays.fill(subset, -1);
+        largest = new ArrayList<>(0);
+        largestDivisibleSubsetHelper(nums, 0, new ArrayList<Integer>(), 1);
+        return largest;
+    }
+    
+    private void largestDivisibleSubsetHelper(int[] nums, int index, List<Integer> curList, int previous) {
+        if(largest.size() < curList.size()) {
+            largest = new ArrayList<>(curList);
+        }
+        
+        for(int i=index; i<nums.length; i++) {
+            if(subset[i] < curList.size() && nums[i] % previous == 0) {
+                subset[i] = curList.size();
+                curList.add(nums[i]);
+                largestDivisibleSubsetHelper(nums, i + 1, curList, nums[i]);
+                curList.remove(curList.size() - 1);
+            }
+        }
+    }
+}
